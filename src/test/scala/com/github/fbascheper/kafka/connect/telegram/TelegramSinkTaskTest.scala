@@ -1,8 +1,7 @@
 package com.github.fbascheper.kafka.connect.telegram
 
-import java.nio.ByteBuffer
-
 import com.github.fbascheper.kafka.connect.telegram.bot.{BotMessage, KafkaConnectPhotoMessage, KafkaConnectTextMessage}
+import com.github.fbascheper.kafka.connect.telegram.mapper.{TelegramMessageMapper, TelegramTestMessages}
 import org.apache.kafka.connect.sink.SinkRecord
 import org.scalamock.scalatest.MockFactory
 import org.telegram.telegrambots.meta.api.methods.send.{SendMessage, SendPhoto}
@@ -57,20 +56,7 @@ class TelegramSinkTaskTest extends TestTelegramBase with MockFactory {
     // sinkTask.start(goodProps.asJava)
 
     val filename = "trained_airplane_1.jpg"
-    val attachment = new TgAttachment()
-    val inputStream = getClass.getClassLoader.getResourceAsStream(filename)
-    val bArray = Stream.continually(inputStream.read).takeWhile(p => p != -1).map(_.toByte).toArray
-    val buffer = ByteBuffer.wrap(bArray)
-    attachment.setName(filename)
-    attachment.setContents(buffer)
-
-    val photoMessage = new TgPhotoMessage()
-    photoMessage.setCaption("Hello world")
-    photoMessage.setPhoto(attachment)
-
-    val tgMessage = new TgMessage()
-    tgMessage.setMessageType(TgMessageType.PHOTO)
-    tgMessage.setPhotoMessage(photoMessage)
+    val tgMessage: TgMessage = TelegramTestMessages.tgPhotoMessage(filename)
 
     val sinkRecord = new SinkRecord("topic", 5, null, null, null, tgMessage, 123)
 

@@ -3,6 +3,7 @@ package com.github.fbascheper.kafka.connect.telegram
 import java.util
 
 import com.github.fbascheper.kafka.connect.telegram.bot.KafkaConnectBot
+import com.github.fbascheper.kafka.connect.telegram.mapper.TelegramMessageMapper
 import org.apache.kafka.clients.consumer.OffsetAndMetadata
 import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.connect.sink.{SinkRecord, SinkTask}
@@ -41,6 +42,7 @@ class TelegramSinkTask extends SinkTask with Logging {
     val username = sinkConfig.getString(TelegramSinkConfig.TELEGRAM_BOT_USERNAME)
     val apiKey = sinkConfig.getPassword(TelegramSinkConfig.TELEGRAM_BOT_API_KEY).value
     val kafkaConnectBot = new KafkaConnectBot(username, apiKey)
+
 
     chatId = Some(sinkConfig.getPassword(TelegramSinkConfig.TELEGRAM_BOT_DESTINATION_CHAT_ID).value.toLong)
     messageSender = Some(kafkaConnectBot)
