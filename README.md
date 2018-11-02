@@ -1,4 +1,12 @@
-# Kafka Connect source for Telegram
+# Kafka-connect-telegram 
+
+> A Kafka Connect source for Telegram
+
+[![Build Status](https://travis-ci.com/fbascheper/kafka-connect-telegram.svg?branch=develop)](https://travis-ci.com/fbascheper/kafka-connect-telegram)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.fbascheper/kafka-connect-telegram/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.fbascheper/kafka-connect-telegram)
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/fbascheper/kafka-connect-telegram/master/LICENSE.txt)
+
+***
 
 ### Getting started
 
@@ -19,6 +27,8 @@ Currently you must use and create your own bot, e.g. the ``KafkaConnectBot`` usi
   - Select the ``@KafkaConnectBot`` and choose ``Add to group``, select the ``Burglar-alerts`` group.
   - Confirm to add the bot to the group.
 - Send the message ``/test`` to the group; this should be sent to the bot as well, even in privacy mode
+
+***
 
 ### Determine and verify the (group) chat ID
 - The group chat id can be retrieved from the Telegram API, using the output fom the  following command, replacing ``XXtokenXX`` by the actual token
