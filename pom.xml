@@ -5,7 +5,7 @@
     <groupId>com.github.fbascheper</groupId>
     <artifactId>kafka-connect-telegram</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <name>kafka-connect-telegram</name>
     <url>https://github.com/fbascheper/kafka-connect-telegram</url>
     <description>
@@ -24,7 +24,7 @@
         <url>https://github.com/fbascheper/kafka-connect-telegram</url>
         <developerConnection>scm:git:https://github.com/fbascheper/kafka-connect-telegram.git
         </developerConnection>
-        <tag>HEAD</tag>
+        <tag>kafka-connect-telegram-0.1.1</tag>
     </scm>
 
     <developers>
