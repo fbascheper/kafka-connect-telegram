@@ -312,8 +312,7 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-
-
+                    
                     <plugin>
                         <groupId>io.confluent</groupId>
                         <artifactId>kafka-connect-maven-plugin</artifactId>
@@ -355,6 +354,31 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-artifacts</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${project.build.directory}/components/packages/fbascheper-${project.artifactId}-${project.version}.zip</file>
+                                            <type>zip</type>
+                                            <classifier>confluent-hub-component</classifier>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
