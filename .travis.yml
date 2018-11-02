@@ -1,29 +1,39 @@
+## see https://www.phillip-kruger.com/post/continuous_integration_to_maven_central/
 language: java
+
 jdk:
 - oraclejdk8
+
+## export GPG details
 before_install:
 - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
 - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 
-install: mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+install:
+  mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
-script: mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+## Build and release to maven central
+script:
+  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
+## Get the project version
 before_deploy:
 - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-- export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep
-  -v '\[')
+- export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
+## Create release in GitHub
 deploy:
   provider: releases
   api_key:
     secure: BjhBwRtBKZrlMsNR9DdFBvprXONbUiAP0hSx/4YaOOGpzj2vCpwtB0zNYjD9YTWES4l25dqQF7WJpZ2DcAVeFZcVt5aW1Rw85SYfusLEJYqPh1HWZeqXY+leFb5rQ5+erAqi1qCc+qyMmNhIiYTm1LIK7I8esL6T7Cl2FYCyGF3PCnwY4S6yXHVqLniXJEulfEXgEGbdqaKN/sUo6pApioJlvO5zmZJxD8jJn8oxGaaqoCvwWoW85nr1uXY1qaGJoF39Sdn5MnmbIq/wffbaRgEC+f8dMobOujdknGGH7FGGvihBu76yLygM4O+ZIv3jqYzLE95pQfSBximPcV7SBeiz+vVUW+eQ22a52G0AN2Pp7Xy0KH9OjVV8Y20lsS5IzSKJEdhFHFEbjB1wUefMIRDsLQS7ngPkT20kMDNhf4olp8pZVLLSx6YeGLbjfEZu7O6EZ5GFeoiKmwnZlQv4HvYOB8sif7fzVLkWxwPFElWKbF7aT3DBFbD2JugaPhhrbiRR+yeoPCDXRUxev6UONQG6vLD4+12ZpHbzbDEbnbKv3qVaeKUnB5+kytb6kDuIit8IMELz68IZ0ezq8yf89ksJKbbfwHmSEVVJXR6XkCNYm3TOGNPwuzKrTMTQ7+zogHhS7ar5FyUrq0UbrZM0q/37uhKArGgL3/p4E16zIB8=
-  file: './target/kafka-connect-telegram-$project_version.jar'
+  file:
+  - ./target/kafka-connect-telegram-$project_version.jar
   skip_cleanup: true
   on:
     repo: fbascheper/kafka-connect-telegram
     branch: develop
+  name: $project_version
 
 cache:
   directories:
-  - "~/.m2/repository"
+  - ~/.m2/repository
