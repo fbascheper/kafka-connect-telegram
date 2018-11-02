@@ -14,11 +14,19 @@
         A Kafka Connect Telegram sink connector to send messages from Kafka.
     </description>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
     <scm>
-        <connection>scm:git:git@github.com/fbascheper/kafka-connect-telegram.git</connection>
+        <connection>scm:git:https://github.com/fbascheper/kafka-connect-telegram.git</connection>
         <url>https://github.com/fbascheper/kafka-connect-telegram</url>
-        <developerConnection>scm:git:git@github.com/fbascheper/kafka-connect-telegram.git
+        <developerConnection>scm:git:https://github.com/fbascheper/kafka-connect-telegram.git
         </developerConnection>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
@@ -27,6 +35,17 @@
             <name>Erik-Berndt Scheper</name>
         </developer>
     </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <kafka-connect-telegram-avro-model.version>0.1.1</kafka-connect-telegram-avro-model.version>
