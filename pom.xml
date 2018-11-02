@@ -59,6 +59,7 @@
         <scalatest.version>3.0.1</scalatest.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <confluent.maven.repo>http://packages.confluent.io/maven/</confluent.maven.repo>
+        <confluent.kafka-connect-maven-plugin.version>0.11.1</confluent.kafka-connect-maven-plugin.version>
     </properties>
 
     <repositories>
@@ -310,6 +311,49 @@
                                 <version>1.9.4</version>
                             </dependency>
                         </dependencies>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>io.confluent</groupId>
+                        <artifactId>kafka-connect-maven-plugin</artifactId>
+                        <version>${confluent.kafka-connect-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>kafka-connect</goal>
+                                </goals>
+                                <configuration>
+                                    <title>Kafka Connect Telegram</title>
+                                    <documentationUrl>https://github.com/fbascheper/kafka-connect-telegram</documentationUrl>
+                                    <description>
+                                        The Telegram connector allows moving data from Kafka to a Telegram chat. It writes data from a topic in Kafka to the configured chat-id.
+                                        It's possible to send both text, photo and video messages to chats. For complex models you must use an Avro model, preferably
+                                        in combination with the kafka-connect-avro-converter.
+                                    </description>
+
+                                    <ownerUsername>fbascheper</ownerUsername>
+                                    <ownerType>user</ownerType>
+                                    <ownerName>Erik-Berndt Scheper.</ownerName>
+                                    <ownerUrl>https://github.com/fbascheper</ownerUrl>
+
+                                    <componentTypes>
+                                        <componentType>sink</componentType>
+                                    </componentTypes>
+
+                                    <tags>
+                                        <tag>Telegram</tag>
+                                        <tag>chat</tag>
+                                    </tags>
+
+                                    <requirements>
+                                        <requirement>Telegram Bot API</requirement>
+                                    </requirements>
+
+                                    <confluentControlCenterIntegration>false</confluentControlCenterIntegration>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
