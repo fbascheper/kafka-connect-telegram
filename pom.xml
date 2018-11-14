@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.fbascheper</groupId>
@@ -54,9 +55,15 @@
         <kafka.version>2.0.0</kafka.version>
         <avro.version>1.8.2</avro.version>
         <slf4j.version>1.7.25</slf4j.version>
+
+        <telegrambots.version>4.1</telegrambots.version>
+        <glassfish.version>2.25.1</glassfish.version>
+        <jerseybundle.version>1.19.3</jerseybundle.version>
+
         <scalamock.version>3.6.0</scalamock.version>
         <mockito.version>1.10.19</mockito.version>
         <scalatest.version>3.0.1</scalatest.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <confluent.maven.repo>http://packages.confluent.io/maven/</confluent.maven.repo>
         <confluent.kafka-connect-maven-plugin.version>0.11.1</confluent.kafka-connect-maven-plugin.version>
@@ -80,6 +87,7 @@
     </repositories>
 
     <dependencies>
+        <!-- =============== COMPILE dependencies =============== -->
         <dependency>
             <groupId>com.github.fbascheper</groupId>
             <artifactId>kafka-connect-telegram-avro-model</artifactId>
@@ -87,54 +95,23 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>connect-api</artifactId>
-            <version>${kafka.version}</version>
-            <scope>provided</scope>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-connect-avro-converter</artifactId>
-            <version>${confluent.version}</version>
-            <scope>provided</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalamock</groupId>
-            <artifactId>scalamock-scalatest-support_2.11</artifactId>
-            <version>${scalamock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.11</artifactId>
-            <version>${scalatest.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <!-- make sure wrong scala version is not pulled in -->
-                    <groupId>org.scala-lang</groupId>
-                    <artifactId>scala-library</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>4.1</version>
+            <version>${telegrambots.version}</version>
             <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
             <exclusions>
                 <exclusion>
@@ -158,18 +135,22 @@
                     <artifactId>guava</artifactId>
                 </exclusion>
             </exclusions>
+            <!-- END update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
         </dependency>
 
+        <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>${jacksonanotation.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -181,16 +162,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${json.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -220,17 +204,85 @@
         </dependency>
         <!-- END update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
 
+
+        <!-- =============== PROVIDED dependencies =============== -->
         <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>connect-api</artifactId>
+            <version>${kafka.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-connect-avro-converter</artifactId>
+            <version>${confluent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>${glassfish.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <version>${glassfish.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>${glassfish.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- =============== TEST dependencies =============== -->
+        <dependency>
+            <groupId>org.scalamock</groupId>
+            <artifactId>scalamock-scalatest-support_2.11</artifactId>
+            <version>${scalamock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.11</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <!-- make sure wrong scala version is not pulled in -->
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -405,7 +457,7 @@
                             </dependency>
                         </dependencies>
                     </plugin>
-                    
+
                     <plugin>
                         <groupId>io.confluent</groupId>
                         <artifactId>kafka-connect-maven-plugin</artifactId>
@@ -417,10 +469,13 @@
                                 </goals>
                                 <configuration>
                                     <title>Kafka Connect Telegram</title>
-                                    <documentationUrl>https://github.com/fbascheper/kafka-connect-telegram</documentationUrl>
+                                    <documentationUrl>https://github.com/fbascheper/kafka-connect-telegram
+                                    </documentationUrl>
                                     <description>
-                                        The Telegram connector allows moving data from Kafka to a Telegram chat. It writes data from a topic in Kafka to the configured chat-id.
-                                        It's possible to send both text, photo and video messages to chats. For complex models you must use an Avro model, preferably
+                                        The Telegram connector allows moving data from Kafka to a Telegram chat. It
+                                        writes data from a topic in Kafka to the configured chat-id.
+                                        It's possible to send both text, photo and video messages to chats. For complex
+                                        models you must use an Avro model, preferably
                                         in combination with the kafka-connect-avro-converter.
                                     </description>
 
@@ -462,7 +517,9 @@
                                 <configuration>
                                     <artifacts>
                                         <artifact>
-                                            <file>${project.build.directory}/components/packages/fbascheper-${project.artifactId}-${project.version}.zip</file>
+                                            <file>
+                                                ${project.build.directory}/components/packages/fbascheper-${project.artifactId}-${project.version}.zip
+                                            </file>
                                             <type>zip</type>
                                             <classifier>confluent-hub-component</classifier>
                                         </artifact>
