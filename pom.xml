@@ -349,7 +349,7 @@
                                         <requirement>Telegram Bot API</requirement>
                                     </requirements>
 
-                                    <confluentControlCenterIntegration>false</confluentControlCenterIntegration>
+                                    <confluentControlCenterIntegration>true</confluentControlCenterIntegration>
                                 </configuration>
                             </execution>
                         </executions>
