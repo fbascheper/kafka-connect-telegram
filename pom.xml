@@ -6,7 +6,7 @@
     <groupId>com.github.fbascheper</groupId>
     <artifactId>kafka-connect-telegram</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>kafka-connect-telegram</name>
     <url>https://github.com/fbascheper/kafka-connect-telegram</url>
     <description>
