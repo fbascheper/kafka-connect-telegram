@@ -2,7 +2,7 @@ package com.github.fbascheper.kafka.connect.telegram
 
 import java.util
 
-import com.github.fbascheper.kafka.connect.telegram.bot.KafkaConnectBot
+import com.github.fbascheper.kafka.connect.telegram.bot.{KafkaConnectBot, KafkaConnectLongPollingBot}
 import com.github.fbascheper.kafka.connect.telegram.mapper.TelegramMessageMapper
 import org.apache.kafka.clients.consumer.OffsetAndMetadata
 import org.apache.kafka.common.TopicPartition
@@ -26,10 +26,9 @@ class TelegramSinkTask extends SinkTask with Logging {
   var messageMapper: Option[TelegramMessageMapper] = None
 
   override def start(props: util.Map[String, String]): Unit = {
-    import org.telegram.telegrambots.ApiContextInitializer
     import org.telegram.telegrambots.meta.TelegramBotsApi
 
-    ApiContextInitializer.init()
+    KafkaConnectLongPollingBot.initBotsAPI()
     val botsApi = new TelegramBotsApi
     val kafkaConnectBot = initTask(props)
 
