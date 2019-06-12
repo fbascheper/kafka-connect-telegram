@@ -33,6 +33,7 @@ Currently you must use and create your own bot, e.g. the ``KafkaConnectBot`` usi
 ### Determine and verify the (group) chat ID
 - The group chat id can be retrieved from the Telegram API, using the output fom the  following command, replacing ``XXtokenXX`` by the actual token
   - ``curl https://api.telegram.org/botXXtokenXX/getUpdates``
+    - Note that `bot` must always be present—it's just `XXtokenXX` that you need to replace
   - In the JSON response, e.g ``chat":{"id":-999991234,"title":"Burglar-alerts","type":"group"`` you can find the chat id, here -999991234
 - Your bot should be able to send using a simple curl command:
 - ``curl -X POST -H "Content-Type: application/json" -d '{"chat_id":"-999991234", "text":"Hello world!"}' https://api.telegram.org/botXXtokenXX/sendMessage``
