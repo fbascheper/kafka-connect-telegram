@@ -49,18 +49,18 @@
         <kafka-connect-telegram-avro-model.version>0.1.1</kafka-connect-telegram-avro-model.version>
 
         <java.version>1.8</java.version>
-        <scala.version>2.11.8</scala.version>
+        <scala.version>2.11.12</scala.version>
         <confluent.version>5.0.0</confluent.version>
         <kafka.version>2.0.0</kafka.version>
         <avro.version>1.8.2</avro.version>
         <commons-compress.version>1.18</commons-compress.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
 
         <telegrambots.version>4.3.1</telegrambots.version>
         <glassfish.version>2.25.1</glassfish.version>
         <jerseybundle.version>1.19.3</jerseybundle.version>
 
-        <scalamock.version>3.6.0</scalamock.version>
+        <scalamock.version>4.2.0</scalamock.version>
         <mockito.version>1.10.19</mockito.version>
         <scalatest.version>3.0.1</scalatest.version>
 
@@ -69,10 +69,10 @@
         <confluent.kafka-connect-maven-plugin.version>0.11.1</confluent.kafka-connect-maven-plugin.version>
 
         <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
-        <guava.version>25.1-android</guava.version>
+        <guava.version>28.0-jre</guava.version>
         <guice.version>4.2.2</guice.version>
         <jackson.version>2.9.9</jackson.version>
-        <jacksonanotation.version>2.9.0</jacksonanotation.version>
+        <jacksonanotation.version>2.9.9</jacksonanotation.version>
         <json.version>20180813</json.version>
         <!-- END update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
 
@@ -228,6 +228,12 @@
             <artifactId>kafka-connect-avro-converter</artifactId>
             <version>${confluent.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -262,7 +268,7 @@
         <!-- =============== TEST dependencies =============== -->
         <dependency>
             <groupId>org.scalamock</groupId>
-            <artifactId>scalamock-scalatest-support_2.11</artifactId>
+            <artifactId>scalamock_2.11</artifactId>
             <version>${scalamock.version}</version>
             <scope>test</scope>
         </dependency>
@@ -302,10 +308,12 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-            <resource>
-                <directory>src/test/resources</directory>
-            </resource>
         </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
 
         <plugins>
             <plugin>
@@ -340,7 +348,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>4.0.2</version>
                 <configuration>
                     <recompileMode>incremental</recompileMode>
                 </configuration>
