@@ -1,14 +1,36 @@
+## see http://eed3si9n.com/all-your-jdks-on-travis-ci-using-sdkman
 ## see https://www.phillip-kruger.com/post/continuous_integration_to_maven_central/
-language: java
-jdk:
-- oraclejdk8
+dist: xenial
+group: stable
+
+language: scala
+
+scala:
+  - 2.12.9
+
+matrix:
+  include:
+    - env:
+        - ADOPTOPENJDK=8
+#    - env:
+#        - ADOPTOPENJDK=11
 
 ## export GPG details
 before_install:
-- echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-- echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-install: mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true
-  -B -V
+  # adding $HOME/.sdkman to cache would create an empty directory, which interferes with the initial installation
+  - "[[ -d $HOME/.sdkman/bin/ ]] || rm -rf $HOME/.sdkman/"
+  - curl -sL https://get.sdkman.io | bash
+  - echo sdkman_auto_answer=true > $HOME/.sdkman/etc/config
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+
+install:
+  - unset JAVA_HOME
+  - sdk install java $(sdk list java | grep -o "$ADOPTOPENJDK\.[0-9\.]*hs-adpt" | head -1)
+  - java -Xmx32m -version
+  - javac -J-Xmx32m -version
+  - mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 ## Build and release to maven central
 script:
@@ -16,8 +38,8 @@ script:
 
 ## Get the project version
 before_deploy:
-- mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-- export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
 ## Create release in GitHub
 deploy:
@@ -25,13 +47,20 @@ deploy:
   api_key:
     secure: nHc4LdrI6NEoxo7mfe2hEH+hMGsljSrD6yoH6r8PKGvfm7BrjVN4ayBefFSX+5CxQYx3/XV36sF5XFWCn2QM18mg4sgUL3sGpB1ITB+VJHDmNT/733ywVNWKDlBcpIVWsil8YGBMIiB3B1kqgrXHbtZeUyN2/2GfjpGEHTOVSgDw/euqPbEU1n0Ol7IZ+1gYX4l53J2PidK0/3K/r2LV4YoSdF1zNsbmUVLkCVMnGAKU0eK5tX92NNIL6sk39NzfiBIXnm8q2D9B0Xl50y9K8MjxGvnDzeOhOagDJkuadnOLyixNAtAgIZuGJuLhW8myXJNRyH3c3Qt0ASaS+25LLIY3Q9Iil3deTT6E6CmSzJKx6C7qIr6SLQ87l+QyJb0D4DaJ4DNZMP2cK7aebBpvY4T0jx9U5wW10DEAGI821GsuvRcsPCCs7yHsA2V6KgZRo3uocnY+5Of/Nze9PnysIOsvicBTivFTldaWaBMCTfGFm9yLEFeE9SUswzCbK1riUq9gUtm7Vv4vR53NRNVfqkD5CAiIYCqB5NyQ4muGIs0YnGMUUNkxbEx5fOguPw0A70xxjRaOIAZnoZTUxTfBd7T7Mzxfv4SJAYrCqCsCTyDOA0H/7ptHDs5obNutMLa5MyKdHA/bNW7zVtzQ0IqWwvhuBB1IwB5FDAgKKZritb8=
   file:
-  - ./target/kafka-connect-telegram-$project_version.jar
+    - ./target/kafka-connect-telegram-$project_version.jar
   skip_cleanup: true
   on:
     repo: fbascheper/kafka-connect-telegram
     branch: develop
   name: $project_version
 
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt  -name "*.lock"               -delete
+
 cache:
   directories:
-  - ~/.m2/repository
+    - ~/.m2/repository
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot
+    - $HOME/.sdkman
