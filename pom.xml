@@ -71,9 +71,9 @@
         <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
         <guava.version>28.0-jre</guava.version>
         <guice.version>4.2.2</guice.version>
-        <jackson.version>2.9.9.3</jackson.version>
+        <jackson.version>2.10.0.pr2</jackson.version>
         <jacksonanotation.version>2.9.9</jacksonanotation.version>
-        <jackson-jaxrs-json-provider.version>2.9.9</jackson-jaxrs-json-provider.version>
+        <jackson-jaxrs-json-provider.version>2.10.0.pr2</jackson-jaxrs-json-provider.version>
         <json.version>20180813</json.version>
         <!-- END update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
 
