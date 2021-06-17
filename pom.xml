@@ -56,7 +56,7 @@
         <commons-compress.version>1.19</commons-compress.version>
         <slf4j.version>1.7.26</slf4j.version>
 
-        <telegrambots.version>4.3.1</telegrambots.version>
+        <telegrambots.version>5.0.0</telegrambots.version>
         <glassfish.version>2.25.1</glassfish.version>
         <jerseybundle.version>1.19.3</jerseybundle.version>
 
@@ -70,8 +70,8 @@
 
         <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
         <guava.version>28.0-jre</guava.version>
-        <guice.version>4.2.2</guice.version>
-        <jackson.version>2.10.0</jackson.version>
+        <guice.version>5.0.0</guice.version>
+        <jackson.version>2.10.5.1</jackson.version>
         <jacksonanotation.version>2.10.0</jacksonanotation.version>
         <jackson-jaxrs-json-provider.version>2.10.0</jackson-jaxrs-json-provider.version>
         <json.version>20180813</json.version>
