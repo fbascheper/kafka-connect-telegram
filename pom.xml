@@ -51,7 +51,7 @@
         <java.version>1.8</java.version>
         <scala.version>2.11.12</scala.version>
         <confluent.version>5.0.0</confluent.version>
-        <kafka.version>2.0.0</kafka.version>
+        <kafka.version>3.9.1</kafka.version>
         <avro.version>1.8.2</avro.version>
         <commons-compress.version>1.19</commons-compress.version>
         <slf4j.version>1.7.26</slf4j.version>
@@ -71,9 +71,9 @@
         <!-- START update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
         <guava.version>28.0-jre</guava.version>
         <guice.version>4.2.2</guice.version>
-        <jackson.version>2.10.0</jackson.version>
+        <jackson.version>2.15.0</jackson.version>
         <jacksonanotation.version>2.10.0</jacksonanotation.version>
-        <jackson-jaxrs-json-provider.version>2.10.0</jackson-jaxrs-json-provider.version>
+        <jackson-jaxrs-json-provider.version>2.15.0</jackson-jaxrs-json-provider.version>
         <json.version>20180813</json.version>
         <!-- END update dependencies for https://github.com/rubenlagus/TelegramBots/issues/547 -->
 
