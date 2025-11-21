@@ -57,7 +57,7 @@
         <slf4j.version>1.7.26</slf4j.version>
 
         <telegrambots.version>4.3.1</telegrambots.version>
-        <glassfish.version>2.25.1</glassfish.version>
+        <glassfish.version>2.46</glassfish.version>
         <jerseybundle.version>1.19.3</jerseybundle.version>
 
         <scalamock.version>4.2.0</scalamock.version>
